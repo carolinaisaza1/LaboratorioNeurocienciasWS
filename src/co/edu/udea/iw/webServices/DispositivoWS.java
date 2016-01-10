@@ -52,7 +52,7 @@ public class DispositivoWS {
 	}
 
 	@GET
-	@Path("/ConsultarUno/{referencia}")
+	@Path("{referencia}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public DispositivoWSDTO consultarUno(@PathParam("referencia") String referencia) {
 		DispositivoWSDTO dispositivoWS = new DispositivoWSDTO();
