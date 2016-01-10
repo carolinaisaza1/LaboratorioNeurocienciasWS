@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -46,8 +47,7 @@ public class TipoWS {
 	
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST
-	public String guardarCliente(@QueryParam("nombre") String nombre) throws RemoteException {
-		
+	public String guardarCliente(@QueryParam("nombre") String nombre) throws RemoteException {	
 		try {
 			tipoBL.crear(nombre);
 		} catch (MyException e) {
@@ -56,6 +56,26 @@ public class TipoWS {
 		
 		return "El tipo de dispositivo fue guardado exitosamente";
 		
+	}
+	
+	//public TipoWSDTO consultarUno(@QueryParam("id") Integer id) {
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("{id}")
+	public TipoWSDTO consultarUno(@PathParam("id") Integer id) {
+		
+		TipoWSDTO tipoWS = new TipoWSDTO();
+		
+		try {
+			Tipo tipo = tipoBL.consultarUno(id);
+			tipoWS.setId(tipo.getId());
+			tipoWS.setNombre(tipo.getNombre());
+
+		} catch (MyException e) {
+			e.getMessage();
+		}
+		
+		return tipoWS;
 	}
 
 }
