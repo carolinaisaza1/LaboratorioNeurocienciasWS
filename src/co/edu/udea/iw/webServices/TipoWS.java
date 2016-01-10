@@ -47,7 +47,7 @@ public class TipoWS {
 	
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST
-	public String guardarCliente(@QueryParam("nombre") String nombre) throws RemoteException {	
+	public String crear(@QueryParam("nombre") String nombre) throws RemoteException {	
 		try {
 			tipoBL.crear(nombre);
 		} catch (MyException e) {
