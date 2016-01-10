@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -65,6 +66,23 @@ public class AdministradorWS {
 		}
 		
 		return "El administrador fue actualizado correctamente";	
+	}
+	
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("{email}/{pass}")
+	public String login(@PathParam("email") String email,
+			@PathParam("pass") String pass) throws RemoteException {
+		
+		Boolean b = Boolean.FALSE;
+		
+		try {
+			b = administradorBL.login(email, pass);
+		} catch (MyException e) {
+			return(e.getMessage());
+		}
+		
+		return "Login exitoso: " + b;
 	}
 	
 }
