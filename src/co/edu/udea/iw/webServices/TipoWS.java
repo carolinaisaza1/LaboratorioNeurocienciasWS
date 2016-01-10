@@ -1,11 +1,14 @@
 package co.edu.udea.iw.webServices;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,20 @@ public class TipoWS {
 			e.getMessage();
 		}
 		return lista;
+	}
+	
+	@Produces(MediaType.TEXT_PLAIN)
+	@POST
+	public String guardarCliente(@QueryParam("nombre") String nombre) throws RemoteException {
+		
+		try {
+			tipoBL.crear(nombre);
+		} catch (MyException e) {
+			return(e.getMessage());
+		}
+		
+		return "El tipo de dispositivo fue guardado exitosamente";
+		
 	}
 
 }
