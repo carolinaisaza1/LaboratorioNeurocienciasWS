@@ -88,7 +88,7 @@ public class PrestamoWS {
 		} catch (ParseException ex) {
 			ex.getMessage();
 		} catch (MyException e) {
-			e.getMessage();
+			return e.getMessage();
 		}
 
 		return ("El préstamo ha quedado almacenado");
@@ -103,7 +103,7 @@ public class PrestamoWS {
 		try {
 			prestamoBL.modificar(id, correoAdministrador, estado);
 		} catch(MyException e) {
-			e.getMessage();
+			return e.getMessage();
 		}
 		
 		return("El estado fue cambiado correctamente");
