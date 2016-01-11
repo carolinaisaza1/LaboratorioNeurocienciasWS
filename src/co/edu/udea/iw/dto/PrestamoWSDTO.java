@@ -3,7 +3,6 @@
  */
 package co.edu.udea.iw.dto;
 
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -47,9 +46,17 @@ public class PrestamoWSDTO implements Serializable {
 	 */
 	private Date fechaEntrega;
 	/**
-	 * Administrador que se ha hecho cargo de autorizar el prestamo
+	 * Nombre del administrador que realiza el prestamo
 	 */
-	private Administrador administrador;
+	private String nombreAdmin;
+	/**
+	 * Apellido del administrador que realiza el prestamo
+	 */
+	private String apellidoAdmin;
+	/**
+	 * correo del administrador que realiza el prestamo
+	 */
+	private String correoAdmin;
 	/**
 	 * Estado del prestamo
 	 */
@@ -182,7 +189,8 @@ public class PrestamoWSDTO implements Serializable {
 	/**
 	 * Metodo para obtener la fecha en que el prestamo inicia
 	 * 
-	 * @return fechaInicio Objeto tipo Date con la fecha en que inicia el prestamo
+	 * @return fechaInicio Objeto tipo Date con la fecha en que inicia el
+	 *         prestamo
 	 */
 	public Date getFechaInicio() {
 		return fechaInicio;
@@ -220,24 +228,60 @@ public class PrestamoWSDTO implements Serializable {
 	}
 
 	/**
-	 * Metodo para obtener el Administrador encargado de aprobar el prestamo
+	 * Metodo para obtener el nombre del administrador que realiza el prestamo
 	 * 
-	 * @return Objeto tipo Administrador que representa la persona encargarda de
-	 *         aprobar el prestamo
+	 * @return nombreAdmin Objeto tipo string con el nombre del administrador
 	 */
-	public Administrador getAdministrador() {
-		return administrador;
+	public String getNombreAdmin() {
+		return nombreAdmin;
 	}
 
 	/**
-	 * Metodo para obtener el Administrador encargado de aprobar el prestamo
+	 * Metodo para fijar el nombre del administrador
 	 * 
-	 * @param administrador
-	 *            Objeto del administrador que se designa para aprobar el
-	 *            prestamo
+	 * @param nombreAdmin
+	 *            Objeto tipo String con el nombre a fijar
 	 */
-	public void setAdministrador(Administrador administrador) {
-		this.administrador = administrador;
+	public void setNombreAdmin(String nombreAdmin) {
+		this.nombreAdmin = nombreAdmin;
+	}
+
+	/**
+	 * Metodo para obtener el apellido del administrador que realiza el prestamo
+	 * 
+	 * @return nombreAdmin Objeto tipo string con el apellido del administrador
+	 */
+	public String getApellidoAdmin() {
+		return apellidoAdmin;
+	}
+
+	/**
+	 * Metodo para fijar el apellido del administrador
+	 * 
+	 * @param nombreAdmin
+	 *            Objeto tipo String con el apellido a fijar
+	 */
+	public void setApellidoAdmin(String apellidoAdmin) {
+		this.apellidoAdmin = apellidoAdmin;
+	}
+
+	/**
+	 * Metodo para obtener el correo del administrador que realiza el prestamo
+	 * 
+	 * @return nombreAdmin Objeto tipo string con el correo del administrador
+	 */
+	public String getCorreoAdmin() {
+		return correoAdmin;
+	}
+
+	/**
+	 * Metodo para fijar el correo del administrador
+	 * 
+	 * @param nombreAdmin
+	 *            Objeto tipo String con el correo a fijar
+	 */
+	public void setCorreoAdmin(String correoAdmin) {
+		this.correoAdmin = correoAdmin;
 	}
 
 }

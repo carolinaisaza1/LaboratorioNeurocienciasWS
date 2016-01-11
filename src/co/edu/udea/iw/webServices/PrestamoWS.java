@@ -45,7 +45,11 @@ public class PrestamoWS {
 			for (Prestamo prestamo : prestamoBL.consultarTodos()) {
 				PrestamoWSDTO prestamoWS = new PrestamoWSDTO();
 
-				prestamoWS.setAdministrador(prestamo.getAdministrador());
+				if (prestamo.getAdministrador() != null) {
+					prestamoWS.setCorreoAdmin(prestamo.getAdministrador().getEmail());
+					prestamoWS.setNombreAdmin(prestamo.getAdministrador().getNombre());
+					prestamoWS.setApellidoAdmin(prestamo.getAdministrador().getApellidos());
+				}
 				prestamoWS.setCedulaUsuario(prestamo.getCedulaUsuario());
 				prestamoWS.setCorreoUsuario(prestamo.getCorreoUsuario());
 				prestamoWS.setEstado(prestamo.getEstado());
@@ -69,9 +73,8 @@ public class PrestamoWS {
 	@POST
 	public String crear(@QueryParam("nombreUsuario") String nombreUsuario,
 			@QueryParam("cedulaUsuario") String cedulaUsuario, @QueryParam("emailUsuario") String emailUsuario,
-			@QueryParam("emailAdmin") String emailAdmin, @QueryParam("fechaInicio") String fechaInicio,
-			@QueryParam("fechaFin") String fechaFin, @QueryParam("dispositivos") List<String> dispositivos)
-					throws RemoteException {
+			@QueryParam("fechaInicio") String fechaInicio, @QueryParam("fechaFin") String fechaFin,
+			@QueryParam("dispositivos") List<String> dispositivos) throws RemoteException {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
@@ -84,7 +87,7 @@ public class PrestamoWS {
 			// dispositivos.toArray(disp);
 			// System.out.println(disp);
 
-			prestamoBL.crear(nombreUsuario, cedulaUsuario, emailUsuario, emailAdmin, fechaIni, fechaEnd, disp);
+			prestamoBL.crear(nombreUsuario, cedulaUsuario, emailUsuario, fechaIni, fechaEnd, disp);
 		} catch (ParseException ex) {
 			ex.getMessage();
 		} catch (MyException e) {
@@ -102,23 +105,27 @@ public class PrestamoWS {
 
 		try {
 			prestamoBL.modificar(id, correoAdministrador, estado);
-		} catch(MyException e) {
+		} catch (MyException e) {
 			return e.getMessage();
 		}
-		
-		return("El estado fue cambiado correctamente");
+
+		return ("El estado fue cambiado correctamente");
 	}
-	
+
 	@Path("/consultarUno")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
 	public PrestamoWSDTO consultarUno(@QueryParam("id") int id) {
 		PrestamoWSDTO prestamoWS = new PrestamoWSDTO();
-		
+
 		try {
 			Prestamo prestamo = prestamoBL.consultarUno(id);
-			
-			prestamoWS.setAdministrador(prestamo.getAdministrador());
+
+			if (prestamo.getAdministrador() != null) {
+				prestamoWS.setCorreoAdmin(prestamo.getAdministrador().getEmail());
+				prestamoWS.setNombreAdmin(prestamo.getAdministrador().getNombre());
+				prestamoWS.setApellidoAdmin(prestamo.getAdministrador().getApellidos());
+			}
 			prestamoWS.setCedulaUsuario(prestamo.getCedulaUsuario());
 			prestamoWS.setCorreoUsuario(prestamo.getCorreoUsuario());
 			prestamoWS.setEstado(prestamo.getEstado());
@@ -127,14 +134,14 @@ public class PrestamoWS {
 			prestamoWS.setFechaInicio(prestamo.getFechaInicio());
 			prestamoWS.setIdPrestamo(prestamo.getIdPrestamo());
 			prestamoWS.setNombreUsuario(prestamo.getNombreUsuario());
-			
-		} catch(MyException e) {
+
+		} catch (MyException e) {
 			e.getMessage();
 		}
-		
+
 		return prestamoWS;
 	}
-	
+
 	@Path("/sinRevisar")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
@@ -143,8 +150,11 @@ public class PrestamoWS {
 		try {
 			for (Prestamo prestamo : prestamoBL.prestamosSinRevisar()) {
 				PrestamoWSDTO prestamoWS = new PrestamoWSDTO();
-
-				prestamoWS.setAdministrador(prestamo.getAdministrador());
+				if (prestamo.getAdministrador() != null) {
+					prestamoWS.setCorreoAdmin(prestamo.getAdministrador().getEmail());
+					prestamoWS.setNombreAdmin(prestamo.getAdministrador().getNombre());
+					prestamoWS.setApellidoAdmin(prestamo.getAdministrador().getApellidos());
+				}
 				prestamoWS.setCedulaUsuario(prestamo.getCedulaUsuario());
 				prestamoWS.setCorreoUsuario(prestamo.getCorreoUsuario());
 				prestamoWS.setEstado(prestamo.getEstado());
