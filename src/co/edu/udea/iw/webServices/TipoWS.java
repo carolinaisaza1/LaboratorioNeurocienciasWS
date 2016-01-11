@@ -27,6 +27,7 @@ public class TipoWS {
 	@Autowired
 	TipoBL tipoBL;
 	
+	@Path("/consultarTodos")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TipoWSDTO> consultarTodos() {
@@ -45,6 +46,7 @@ public class TipoWS {
 		return lista;
 	}
 	
+	@Path("/crear")
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST
 	public String crear(@QueryParam("nombre") String nombre) throws RemoteException {	
@@ -58,11 +60,10 @@ public class TipoWS {
 		
 	}
 	
-	//public TipoWSDTO consultarUno(@QueryParam("id") Integer id) {
+	@Path("/consultarUno")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{id}")
-	public TipoWSDTO consultarUno(@PathParam("id") Integer id) {
+	public TipoWSDTO consultarUno(@QueryParam("id") Integer id) {
 		
 		TipoWSDTO tipoWS = new TipoWSDTO();
 		

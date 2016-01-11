@@ -25,6 +25,7 @@ public class AdministradorWS {
 	@Autowired
 	AdministradorBL administradorBL;
 
+	@Path("/crear")
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST
 	public String crearAdministrador(@QueryParam("email") String email, @QueryParam("contrasena") String contrasena,
@@ -39,6 +40,7 @@ public class AdministradorWS {
 		
 	}
 	
+	@Path("/eliminar")
 	@Produces(MediaType.TEXT_PLAIN)
 	@GET
 	public String eliminarAdministrador(@QueryParam("email") String email,
@@ -53,6 +55,7 @@ public class AdministradorWS {
 		return "Se eliminó correctamente del sistema el administrador deseado";
 	}
 	
+	@Path("/actualizar")
 	@Produces(MediaType.TEXT_PLAIN)
 	@PUT
 	public String actualizarPassAdministrador(@QueryParam("email") String email,
@@ -68,11 +71,11 @@ public class AdministradorWS {
 		return "El administrador fue actualizado correctamente";	
 	}
 	
+	@Path("/login")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	@Path("{email}/{pass}")
-	public String login(@PathParam("email") String email,
-			@PathParam("pass") String pass) throws RemoteException {
+	public String login(@QueryParam("email") String email,
+			@QueryParam("pass") String pass) throws RemoteException {
 		
 		Boolean b = Boolean.FALSE;
 		
