@@ -20,13 +20,34 @@ import co.edu.udea.iw.dto.Tipo;
 import co.edu.udea.iw.dto.TipoWSDTO;
 import co.edu.udea.iw.exception.MyException;
 
+
+/**
+ * Clase en la que se implementan los servicios Restful necesarios para
+ * crear y consultar tipos de dispositivos
+ *
+ * @author Carolina Isaza
+ * @author Sebastian Jimenez
+ * @author Jaime Londono
+ *
+ */
+
 @Component
 @Path("Tipo")
 public class TipoWS {
 	
+	/**
+	 * Objeto que se inyecta de la clase tipoBL que permite acceder
+	 * y regular de acuerdo a las reglas de negocio, las operaciones
+	 * de los diferentes tipos de dispositivos
+	 */
 	@Autowired
 	TipoBL tipoBL;
 	
+	/**
+	 * Servicio que permite retornar todos los tipos de dispositivos
+	 * almacenados en la base de datos
+	 * @return lista con todos los tipos de dispositivos almacenados en la base de datos
+	 */
 	@Path("/consultarTodos")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +67,16 @@ public class TipoWS {
 		return lista;
 	}
 	
+	/**
+	 * Servicio que permite ingresar a la base de datos un nuevo
+	 * tipo de dispositivo
+	 * 
+	 * @param nombre 
+	 * 				nombre del tipo de dispositivo a crear
+	 * @return mensaje confirmando si la operación fue exitosa, o si hubo
+	 * 		   algún error se retorna la pila del mismo.
+	 * @throws RemoteException
+	 */
 	@Path("/crear")
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST
@@ -60,6 +91,14 @@ public class TipoWS {
 		
 	}
 	
+	/**
+	 * Servicio que permite consultar los tipos de dispositivos individualmente
+	 * dado el id de alguno de ellos.
+	 * @param id
+	 * 			identificación única de cada tipo de dispositivo
+	 * @return dispositivo correspondiente al id dado, si no se encuentra
+	 * 		   un dispositivo con el id se retorna el objeto vacío.
+	 */
 	@Path("/consultarUno")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

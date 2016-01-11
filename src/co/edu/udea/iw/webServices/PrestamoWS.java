@@ -26,16 +26,33 @@ import co.edu.udea.iw.dto.PrestamoWSDTO;
 import co.edu.udea.iw.exception.MyException;
 
 /**
- * @author Sebastian
+ * Esta clase contiene los metodos de los servicios web a consumir
+ * correspondientes a todo lo que concierne a Prestamos de dispositivos.
+ * 
+ * @author Sebastian Jimenez
+ * @author Carolina Isaza
+ * @author Jaime Londono
  *
  */
 @Component
 @Path("Prestamo")
 public class PrestamoWS {
 
+	/**
+	 * Objeto autoinyectable de la clase PrestamoBL que permitira acceder a los
+	 * metodos en relacion a Prestamos de dispositivos en lo que a la logica del
+	 * negocio se refiere.
+	 */
 	@Autowired
 	PrestamoBL prestamoBL;
 
+	/**
+	 * Servicio para consultar todos los prestamos registrados en la base de
+	 * datos.
+	 * 
+	 * @return Lista con todos los prestamos encontrados.
+	 * @throws RemoteException
+	 */
 	@Path("/consultarTodos")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
@@ -68,6 +85,22 @@ public class PrestamoWS {
 		return (lista);
 	}
 
+	/**
+	 * Servicio para solicitar un prestamo de dispositivos.
+	 * 
+	 * @param nombreUsuario
+	 *            Nombre de la persona que solicita el prestamo.
+	 * @param cedulaUsuario
+	 *            Cedula o identificacion de la persona que solicita el
+	 *            prestamo.
+	 * @param emailUsuario
+	 *            Correo electronico de la persona que solicita el prestamo.
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @param dispositivos
+	 * @return
+	 * @throws RemoteException
+	 */
 	@Path("/crear")
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST
@@ -97,6 +130,19 @@ public class PrestamoWS {
 		return ("El préstamo ha quedado almacenado");
 	}
 
+	/**
+	 * Servicio para aprobar o rechazar (modificar el estado) solicitudes de
+	 * Prestamo.
+	 * 
+	 * @param id
+	 *            Identificador del prestamo a revisar.
+	 * @param correoAdministrador
+	 *            Correo electronico del administrador que realiza la operacion.
+	 * @param estado
+	 *            Nuevo estado a asignar al prestamo.
+	 * @return Mensaje confirmado si la operacion fue exitosa. De lo contrario,
+	 *         se retorna la pila de error.
+	 */
 	@Path("/modificar")
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST
@@ -112,6 +158,13 @@ public class PrestamoWS {
 		return ("El estado fue cambiado correctamente");
 	}
 
+	/**
+	 * Servicio para consultar una solicitud de prestamo especifica.
+	 * 
+	 * @param id
+	 *            Identificador de la solicitud que se desea consultar.
+	 * @return Toda la informacion de la solicitud especificada.
+	 */
 	@Path("/consultarUno")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
@@ -142,6 +195,12 @@ public class PrestamoWS {
 		return prestamoWS;
 	}
 
+	/**
+	 * Servicio para consultar todas las solicitudes de prestamo que aun no han
+	 * recibido respuesta.
+	 * 
+	 * @return Lista de todas las solicitudes encontradas.
+	 */
 	@Path("/sinRevisar")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
