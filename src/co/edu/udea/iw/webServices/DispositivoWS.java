@@ -1,5 +1,8 @@
 package co.edu.udea.iw.webServices;
 
+import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +34,7 @@ public class DispositivoWS {
 	DispositivoBL dispositivoBL;
 
 	@GET
+	@Path("/consultarTodos")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<DispositivoWSDTO> consultarTodos() {
 		List<DispositivoWSDTO> lista = new ArrayList<DispositivoWSDTO>();
@@ -51,13 +55,12 @@ public class DispositivoWS {
 		return lista;
 	}
 
+	@Path("/consultarUno")
+	@Produces(MediaType.APPLICATION_JSON)
 	@GET
-	@Path("{referencia}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public DispositivoWSDTO consultarUno(@PathParam("referencia") String referencia) {
+	public DispositivoWSDTO consultarUno(@QueryParam("referencia") String referencia) {
 		DispositivoWSDTO dispositivoWS = new DispositivoWSDTO();
 		try {
-
 			Dispositivo dispositivo = dispositivoBL.consultarUno(referencia);
 			dispositivoWS.setTipo(dispositivo.getTipo());
 			dispositivoWS.setDescripcion(dispositivo.getDescripcion());
@@ -66,12 +69,13 @@ public class DispositivoWS {
 			dispositivoWS.setNombre(dispositivo.getNombre());
 			dispositivoWS.setReferencia(dispositivo.getReferencia());
 		} catch (MyException e) {
-			System.out.println(e.getMessage());
+			e.getMessage();
 		}
 		return dispositivoWS;
 	}
 
 	@POST
+	@Path("/crear")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String crearDispositivo(@QueryParam("referencia") String referencia, @QueryParam("nombre") String nombre,
 			@QueryParam("descripcion") String descripcion, @QueryParam("tipo") int tipo,
@@ -87,8 +91,8 @@ public class DispositivoWS {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{tipo}")
-	public List<DispositivoWSDTO> consultarPorTipo(@PathParam("tipo") int tipo) {
+	@Path("/consultarPorTipo")
+	public List<DispositivoWSDTO> consultarPorTipo(@QueryParam("tipo") int tipo) {
 		List<DispositivoWSDTO> lista = new ArrayList<DispositivoWSDTO>();
 		try {
 			for (Dispositivo dispositivo : dispositivoBL.consultarPorTipo(tipo)) {
@@ -108,6 +112,7 @@ public class DispositivoWS {
 	}
 
 	@PUT
+	@Path("/actualizar")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String actualizarDispositivo(@QueryParam("referencia") String referencia,
 			@QueryParam("nombre") String nombre, @QueryParam("descripcion") String descripcion,
@@ -122,32 +127,29 @@ public class DispositivoWS {
 		return "El dispositivo se actualizó correctamente";
 	}
 
-	@DELETE
-	public String eliminarDispositivo(@QueryParam("referencia") String referencia,
-			@QueryParam("emailAdministrador") String emailAdministrador) {
-		try {
-			dispositivoBL.eliminarDispositivo(referencia, emailAdministrador);
-		} catch (MyException e) {
-			return e.getMessage();
-		}
-		return "El dispositivo se ha eliminado correctamente";
-	}
-
 	@GET
-	@Path("{fechaInicio}/{fechaFin}")
+	@Path("/mostrarDispositivosDisponibles")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DispositivoWSDTO> mostrarDispositivosDisponibles(@PathParam("fechaInicio") Date fechaInicio,
-			@PathParam("fechaFin") Date fechaFin) {
+	public List<DispositivoWSDTO> mostrarDispositivosDisponibles(@QueryParam("fechaInicio") String fechaInicio,
+			@QueryParam("fechaFin") String fechaFin) {
 		List<DispositivoWSDTO> lista = new ArrayList<DispositivoWSDTO>();
-		for (Dispositivo dispositivo : dispositivoBL.mostrarDispositivosDisponibles(fechaInicio, fechaFin)) {
-			DispositivoWSDTO dispositivoWS = new DispositivoWSDTO();
-			dispositivoWS.setTipo(dispositivo.getTipo());
-			dispositivoWS.setDescripcion(dispositivo.getDescripcion());
-			dispositivoWS.setFoto(dispositivo.getFoto());
-			dispositivoWS.setDisponible(dispositivo.isDisponible());
-			dispositivoWS.setNombre(dispositivo.getNombre());
-			dispositivoWS.setReferencia(dispositivo.getReferencia());
-			lista.add(dispositivoWS);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+
+		try {
+			Date fechaIni = sdf.parse(fechaInicio);
+			Date fechaEnd = sdf.parse(fechaFin);
+			for (Dispositivo dispositivo : dispositivoBL.mostrarDispositivosDisponibles(fechaIni, fechaEnd)) {
+				DispositivoWSDTO dispositivoWS = new DispositivoWSDTO();
+				dispositivoWS.setTipo(dispositivo.getTipo());
+				dispositivoWS.setDescripcion(dispositivo.getDescripcion());
+				dispositivoWS.setFoto(dispositivo.getFoto());
+				dispositivoWS.setDisponible(dispositivo.isDisponible());
+				dispositivoWS.setNombre(dispositivo.getNombre());
+				dispositivoWS.setReferencia(dispositivo.getReferencia());
+				lista.add(dispositivoWS);
+			}
+		} catch (ParseException e) {
+			e.getMessage();
 		}
 		return lista;
 

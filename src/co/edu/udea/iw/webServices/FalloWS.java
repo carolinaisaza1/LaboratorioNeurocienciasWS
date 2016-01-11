@@ -31,6 +31,7 @@ public class FalloWS {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/consultarTodos")
 	public List<FalloWSDTO> consultarTodos() {
 		List<FalloWSDTO> lista = new ArrayList<FalloWSDTO>();
 		try {
@@ -50,6 +51,7 @@ public class FalloWS {
 	}
 
 	@POST
+	@Path("/crear")
 	public String crearFallo(@QueryParam("idFallo") int idFallo, @QueryParam("error") String error,
 			@QueryParam("referencia") String referenciaDispositivo) {
 		try {
@@ -61,6 +63,7 @@ public class FalloWS {
 	}
 
 	@PUT
+	@Path("/actualizar")
 	public String actualizarFallo(@QueryParam("idFallo") int idFallo, @QueryParam("solucionado") boolean solucionado) {
 		try {
 			falloBL.actualizarFallo(idFallo, solucionado);
@@ -72,8 +75,8 @@ public class FalloWS {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{referencia}")
-	public List<FalloWSDTO> consultarPorDispositivo(@PathParam("referencia") String referenciaDispositivo) {
+	@Path("/consultarPorDispositivo")
+	public List<FalloWSDTO> consultarPorDispositivo(@QueryParam("referencia") String referenciaDispositivo) {
 		List<FalloWSDTO> lista = new ArrayList<FalloWSDTO>();
 		try {
 			for (Fallo fallo : falloBL.consultarFalloPorDispositivo(referenciaDispositivo)) {
@@ -114,8 +117,8 @@ public class FalloWS {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/ConsultarUno/{id}")
-	public FalloWSDTO consultarUno(@PathParam("id") int id) {
+	@Path("/ConsultarUno")
+	public FalloWSDTO consultarUno(@QueryParam("id") int id) {
 		FalloWSDTO falloWS = new FalloWSDTO();
 		try {
 			Fallo fallo = falloBL.consultarUno(id);
