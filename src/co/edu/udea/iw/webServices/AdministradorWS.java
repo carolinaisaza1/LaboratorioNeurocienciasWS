@@ -17,14 +17,42 @@ import org.springframework.stereotype.Component;
 import co.edu.udea.iw.bl.AdministradorBL;
 import co.edu.udea.iw.exception.MyException;
 
+/**
+ * Clase en la que se implementan los servicios Restful necesarios para
+ * manipular la información de los administradores
+ *
+ * @author Carolina Isaza
+ * @author Sebastian Jimenez
+ * @author Jaime Londono
+ *
+ */
 @Component
 @Path("Administrador")
 public class AdministradorWS {
 	
-	
+	/**
+	 * Objeto que se inyecta de la clase AdministradorBL que permite acceder
+	 * y regular de acuerdo a las reglas de negocio, las operaciones
+	 * que pueden realizarse para gestionar los administradores del sistema
+	 */
 	@Autowired
 	AdministradorBL administradorBL;
 
+	/**
+	 * Servicio que permite crear un nuevo administrador en el sistema
+	 * 
+	 * @param email
+	 * 				correo del administrador que se desea crear
+	 * @param contrasena
+	 * 				contrasena de acceso al sistema
+	 * @param nombre
+	 * 				nombre del administrador
+	 * @param apellido
+	 * 				apellido del administrador
+	 * @return String con el resultado de la operación si fue éxitosa, o la pila
+	 * 		   del error en caso contrario
+	 * @throws RemoteException
+	 */
 	@Path("/crear")
 	@Produces(MediaType.TEXT_PLAIN)
 	@POST
@@ -40,6 +68,17 @@ public class AdministradorWS {
 		
 	}
 	
+	/**
+	 * Servicio que permite eliminar un administrador físicamente de la base de datos
+	 * 
+	 * @param email
+	 * 				correo del administrador que se desea eliminar
+	 * @param contrasena
+	 * 				contrasena de la cuenta del administrador que se va a eliminar
+	 * @return String con el resultado de la operación si fue éxitosa, o la pila
+	 * 		   del error en caso contrario
+	 * @throws RemoteException
+	 */
 	@Path("/eliminar")
 	@Produces(MediaType.TEXT_PLAIN)
 	@GET
@@ -55,6 +94,18 @@ public class AdministradorWS {
 		return "Se eliminó correctamente del sistema el administrador deseado";
 	}
 	
+	/**
+	 * Servicio que permite actualizar la contrasena de un administrador
+	 * @param email
+	 * 				correo del administrador al cual se le desea actualizar la contrasena
+	 * @param contrasenaNueva
+	 * 				contrasena nueva del administrador
+	 * @param contrasenaVieja
+	 * 				contrasena vieja del administrador
+	 * @return String con el resultado de la operación si fue éxitosa, o la pila del
+	 * 		   error en caso de que algo falle
+	 * @throws RemoteException
+	 */
 	@Path("/actualizar")
 	@Produces(MediaType.TEXT_PLAIN)
 	@PUT
@@ -71,6 +122,17 @@ public class AdministradorWS {
 		return "El administrador fue actualizado correctamente";	
 	}
 	
+	/**
+	 * Servicio que permite validar las credenciales de login de un usuario
+	 * 
+	 * @param email
+	 * 				correo del usuario que se va a loguear
+	 * @param pass
+	 * 				contrasena de la persona que se va a logear
+	 * @return String que indica si la operación de éxitosa fue éxitosa o no,
+	 * 		   en caso de error se retorna el mensaje generado por el mismo.
+	 * @throws RemoteException
+	 */
 	@Path("/login")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
