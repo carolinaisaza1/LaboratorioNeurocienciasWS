@@ -47,7 +47,9 @@ public class PrestamoWS {
 	PrestamoBL prestamoBL;
 
 	/**
-	 * Servicio para consultar todos los prestamos registrados en la base de datos.
+	 * Servicio para consultar todos los prestamos registrados en la base de
+	 * datos.
+	 * 
 	 * @return Lista con todos los prestamos encontrados.
 	 * @throws RemoteException
 	 */
@@ -86,9 +88,13 @@ public class PrestamoWS {
 	/**
 	 * Servicio para solicitar un prestamo de dispositivos.
 	 * 
-	 * @param nombreUsuario Nombre de la persona que solicita el prestamo.
-	 * @param cedulaUsuario Cedula o identificacion de la persona que solicita el prestamo. 
-	 * @param emailUsuario Correo electronico de la persona que solicita el prestamo.
+	 * @param nombreUsuario
+	 *            Nombre de la persona que solicita el prestamo.
+	 * @param cedulaUsuario
+	 *            Cedula o identificacion de la persona que solicita el
+	 *            prestamo.
+	 * @param emailUsuario
+	 *            Correo electronico de la persona que solicita el prestamo.
 	 * @param fechaInicio
 	 * @param fechaFin
 	 * @param dispositivos
@@ -125,11 +131,17 @@ public class PrestamoWS {
 	}
 
 	/**
-	 * Servicio para aprobar o rechazar (modificar el estado) solicitudes de Prestamo.
-	 * @param id Identificador del prestamo a revisar.
-	 * @param correoAdministrador Correo electronico del administrador que realiza la operacion.
-	 * @param estado Nuevo estado a asignar al prestamo.
-	 * @return Mensaje confirmado si la operacion fue exitosa. De lo contrario, se retorna la pila de error.
+	 * Servicio para aprobar o rechazar (modificar el estado) solicitudes de
+	 * Prestamo.
+	 * 
+	 * @param id
+	 *            Identificador del prestamo a revisar.
+	 * @param correoAdministrador
+	 *            Correo electronico del administrador que realiza la operacion.
+	 * @param estado
+	 *            Nuevo estado a asignar al prestamo.
+	 * @return Mensaje confirmado si la operacion fue exitosa. De lo contrario,
+	 *         se retorna la pila de error.
 	 */
 	@Path("/modificar")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -148,7 +160,9 @@ public class PrestamoWS {
 
 	/**
 	 * Servicio para consultar una solicitud de prestamo especifica.
-	 * @param id Identificador de la solicitud que se desea consultar.
+	 * 
+	 * @param id
+	 *            Identificador de la solicitud que se desea consultar.
 	 * @return Toda la informacion de la solicitud especificada.
 	 */
 	@Path("/consultarUno")
@@ -182,7 +196,9 @@ public class PrestamoWS {
 	}
 
 	/**
-	 * Servicio para consultar todas las solicitudes de prestamo que aun no han recibido respuesta.
+	 * Servicio para consultar todas las solicitudes de prestamo que aun no han
+	 * recibido respuesta.
+	 * 
 	 * @return Lista de todas las solicitudes encontradas.
 	 */
 	@Path("/sinRevisar")
