@@ -224,7 +224,7 @@ public class DispositivoWS {
 		} catch (MyException e) {
 			return e.getMessage();
 		}
-		return "El dispositivo se actualizó correctamente";
+		return "El dispositivo se actualizó correctamente"; 
 	}
 
 	/**
