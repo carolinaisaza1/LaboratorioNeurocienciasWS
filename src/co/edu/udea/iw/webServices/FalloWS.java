@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +43,12 @@ public class FalloWS {
 	 */
 	@Autowired
 	FalloBL falloBL;
+	
+	/**
+	 * Objeto de la clase Logger que permitirá almacenar los mensajes de error
+	 * en el log
+	 */
+	private static Logger logger = Logger.getLogger(FalloWS.class);
 
 	/**
 	 * Servicio para consultar todos los fallos registrados en la base de datos.
@@ -64,7 +71,7 @@ public class FalloWS {
 				lista.add(falloWS);
 			}
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 		return lista;
 	}
@@ -88,6 +95,7 @@ public class FalloWS {
 		try {
 			falloBL.crearFallo(idFallo, error, referenciaDispositivo);
 		} catch (MyException e) {
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 		return "El fallo se ha creado correctamente";
@@ -109,6 +117,7 @@ public class FalloWS {
 		try {
 			falloBL.actualizarFallo(idFallo, solucionado);
 		} catch (MyException e) {
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 		return "El fallo ha sido actualizado";
@@ -138,7 +147,7 @@ public class FalloWS {
 				lista.add(falloWS);
 			}
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 		return lista;
 	}
@@ -164,7 +173,7 @@ public class FalloWS {
 				lista.add(falloWS);
 			}
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 		return lista;
 	}
@@ -178,7 +187,7 @@ public class FalloWS {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/ConsultarUno")
+	@Path("/consultarUno")
 	public FalloWSDTO consultarUno(@QueryParam("id") int id) {
 		FalloWSDTO falloWS = new FalloWSDTO();
 		try {
@@ -189,7 +198,8 @@ public class FalloWS {
 			falloWS.setIdFallo(fallo.getIdFallo());
 			falloWS.setSolucionado(fallo.isSolucionado());
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
+			return null;
 		}
 		return falloWS;
 	}

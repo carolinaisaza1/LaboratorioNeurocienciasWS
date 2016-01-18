@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +46,12 @@ public class PrestamoWS {
 	 */
 	@Autowired
 	PrestamoBL prestamoBL;
-
+	
+	/**
+	 * Objeto de la clase Logger que permitirá almacenar los mensajes de error
+	 * en el log
+	 */
+	private static Logger logger = Logger.getLogger(PrestamoWS.class);
 	/**
 	 * Servicio para consultar todos los prestamos registrados en la base de
 	 * datos.
@@ -79,7 +85,7 @@ public class PrestamoWS {
 				lista.add(prestamoWS);
 			}
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 
 		return (lista);
@@ -124,6 +130,7 @@ public class PrestamoWS {
 		} catch (ParseException ex) {
 			ex.getMessage();
 		} catch (MyException e) {
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 
@@ -152,6 +159,7 @@ public class PrestamoWS {
 		try {
 			prestamoBL.modificar(id, correoAdministrador, estado);
 		} catch (MyException e) {
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
 
@@ -189,9 +197,9 @@ public class PrestamoWS {
 			prestamoWS.setNombreUsuario(prestamo.getNombreUsuario());
 
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
+			return null;
 		}
-
 		return prestamoWS;
 	}
 
@@ -226,7 +234,7 @@ public class PrestamoWS {
 				lista.add(prestamoWS);
 			}
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 
 		return (lista);

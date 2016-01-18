@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,6 +44,12 @@ public class DispositivoWS {
 	 */
 	@Autowired
 	DispositivoBL dispositivoBL;
+
+	/**
+	 * Objeto de la clase Logger que permitirá almacenar los mensajes de error
+	 * en el log
+	 */
+	private static Logger logger = Logger.getLogger(DispositivoWS.class);
 
 	/**
 	 * Servicio de tipo GET en el que se consultaran todos los dispositivos
@@ -75,7 +82,7 @@ public class DispositivoWS {
 				lista.add(dispositivoWS);
 			}
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 		return lista;
 	}
@@ -99,14 +106,17 @@ public class DispositivoWS {
 			Dispositivo dispositivo = dispositivoBL.consultarUno(referencia);
 			// Se asignan al objeto del tipo DispositivoWSDTO los valores
 			// definidos para mostrar en el servicio
+
 			dispositivoWS.setTipo(dispositivo.getTipo());
 			dispositivoWS.setDescripcion(dispositivo.getDescripcion());
 			dispositivoWS.setFoto(dispositivo.getFoto());
 			dispositivoWS.setDisponible(dispositivo.isDisponible());
 			dispositivoWS.setNombre(dispositivo.getNombre());
 			dispositivoWS.setReferencia(dispositivo.getReferencia());
+
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
+			return null;
 		}
 		return dispositivoWS;
 	}
@@ -142,6 +152,7 @@ public class DispositivoWS {
 			// negocio con los parametros ingresados en la url
 			dispositivoBL.crearDispositivo(referencia, nombre, descripcion, tipo, foto, emailAdministrador);
 		} catch (MyException e) {
+			logger.error(e.getMessage());
 			return (e.getMessage());
 		}
 		return "El dispositivo se ha creado exitosamente";
@@ -181,7 +192,7 @@ public class DispositivoWS {
 				lista.add(dispositivoWS);
 			}
 		} catch (MyException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
 		}
 		return lista;
 	}
@@ -222,9 +233,10 @@ public class DispositivoWS {
 			dispositivoBL.actualizarDispositivo(referencia, nombre, descripcion, tipo, foto, disponible,
 					emailAdministrador);
 		} catch (MyException e) {
+			logger.error(e.getMessage());
 			return e.getMessage();
 		}
-		return "El dispositivo se actualizó correctamente"; 
+		return "El dispositivo se actualizó correctamente";
 	}
 
 	/**
@@ -256,9 +268,9 @@ public class DispositivoWS {
 			// Recorre la lista de dispositivos que se encuentran disponibles
 			// dentro del rango de la fechas ingresadas
 			for (Dispositivo dispositivo : dispositivoBL.mostrarDispositivosDisponibles(fechaIni, fechaEnd)) {
-				//Crea un objeto del tipo DispositivoWSDTO
+				// Crea un objeto del tipo DispositivoWSDTO
 				DispositivoWSDTO dispositivoWS = new DispositivoWSDTO();
-				//Se asignan al objeto del tipo DispositivoWSDTO los valores
+				// Se asignan al objeto del tipo DispositivoWSDTO los valores
 				// definidos para mostrar en el servicio
 				dispositivoWS.setTipo(dispositivo.getTipo());
 				dispositivoWS.setDescripcion(dispositivo.getDescripcion());
@@ -266,11 +278,12 @@ public class DispositivoWS {
 				dispositivoWS.setDisponible(dispositivo.isDisponible());
 				dispositivoWS.setNombre(dispositivo.getNombre());
 				dispositivoWS.setReferencia(dispositivo.getReferencia());
-				//anade el dispositivo a la lista que se retornara
+				// anade el dispositivo a la lista que se retornara
 				lista.add(dispositivoWS);
 			}
 		} catch (ParseException e) {
-			e.getMessage();
+			logger.error(e.getMessage());
+			return null;
 		}
 		return lista;
 
