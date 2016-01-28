@@ -8,10 +8,10 @@
 		<li ng-show="isLogueado" ng-click="salir()"><a href="">Salir</a></li>
 	</ul>
 </nav>
-<h1 align="center">Dispositivos</h1>
-
-
-
+<h1 ng-show="dispositivos.length > 0" align="center">Dispositivos</h1>
+<div class="alert alert-warning" ng-hide="dispositivos.length > 0">
+<h4 align="center"> No existen dispositivos</h4>
+</div>
 <table id="table-1" class="table table-striped">
 	<tbody>
 		<tr ng-repeat="dispositivo in dispositivos">
