@@ -3,7 +3,16 @@ package co.edu.udea.iw.dto;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
+/**
+ * Esta clase contiene los atributos de un fallo de dispositivos en el
+ * Laboratorio de Neurociencias y sus respectivos metodos de acceso (getters and
+ * setters).
+ * 
+ * @author Carolina Isaza
+ * @author Sebastian Jimenez
+ * @author Jaime Londono
+ *
+ */
 @XmlRootElement
 public class FalloWSDTO {
 	/**

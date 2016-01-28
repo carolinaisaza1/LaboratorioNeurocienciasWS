@@ -1,0 +1,31 @@
+<nav class="nav navbar-inverse">
+	<ul class="nav navbar-nav">
+		<li class="active" ng-click="goDispositivo()"><a href="">Home</a></li>
+		<li ng-hide="isLogueado" ng-click="goLogin()"><a href="">Login</a>
+		</li>
+		<li ng-show="isLogueado" ng-click="goCrear()"><a href="">Crear
+				Dispositivo</a></li>
+		<li ng-show="isLogueado" ng-click="salir()"><a href="">Salir</a></li>
+	</ul>
+</nav>
+<h1 align="center">Dispositivos</h1>
+
+
+
+<table id="table-1" class="table table-striped">
+	<tbody>
+		<tr ng-repeat="dispositivo in dispositivos">
+			<td><IMG WIDTH="300" HEIGHT="280" src="{{dispositivo.foto}}"></td>
+			<td>
+				<div class="col">
+					<h1>
+						<label>Referencia: </label>{{dispositivo.referencia}}
+					</h1>
+					<label>Nombre: </label>{{dispositivo.nombre}}</br> <label>Estado:
+					</label>{{dispositivo.disponible}}</br> <label>Tipo: </label>{{dispositivo.tipo.nombre}}</br>
+					<label>Descripcion: </label>{{dispositivo.descripcion}}
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
